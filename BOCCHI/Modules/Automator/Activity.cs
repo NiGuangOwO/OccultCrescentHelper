@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Ocelot.Extensions;
 
 namespace BOCCHI.Modules.Automator;
 
@@ -35,6 +36,11 @@ public abstract class Activity
     public ActivityState state = ActivityState.Idle;
 
     protected readonly Dictionary<ActivityState, Func<StateManagerModule, Func<Chain>?>> handlers;
+    
+    private readonly static List<uint> DangerousEnemies = [
+        18146,//指令罐小怪
+        18123,//封印恶魔火球
+    ];
 
     protected unsafe Activity(EventData data, Lifestream lifestream, VNavmesh vnav, AutomatorModule module)
     {
@@ -101,6 +107,8 @@ public abstract class Activity
             module.Debug("Selected navigation type: " + navType);
 
             var chain = Chain.Create("Illegal:Pathfinding")
+                .ConditionalThen(_ => isFate && module.Config.ShouldStanceOnBeforeDoFates && Player.Job.IsTank(), new StanceChain(isFate))
+                .ConditionalThen(_ => !isFate && module.Config.ShouldStanceOffBeforeCriticalEncounters && Player.Job.IsTank(), new StanceChain(isFate))
                 .ConditionalWait(_ => !isFate && module.Config.ShouldDelayCriticalEncounters && lifestream.GetActiveCustomAetheryte() != 0, Random.Shared.Next((int)module.Config.MinDelay * 1000, (int)module.Config.MaxDelay * 1000));
 
             switch (navType)
@@ -177,6 +185,13 @@ public abstract class Activity
                     }
 
                     var enemies = GetEnemies();
+
+                    if (enemies.Any(e => DangerousEnemies.Contains(e.DataId) && e.CurrentHp > 0))
+                    {
+                        Svc.Targets.Target = enemies.FirstOrDefault(e => DangerousEnemies.Contains(e.DataId) && e.CurrentHp > 0);
+                        return states.GetState() == State.Idle;
+                    }
+                    
                     Svc.Targets.Target = module.Config.ShouldForceTargetCentralEnemy ? enemies.Centroid() : enemies.Closest();
 
                     return states.GetState() == State.Idle;

@@ -1,5 +1,6 @@
 ﻿using BOCCHI.ActionHelpers;
 using BOCCHI.Modules.MobFarmer.Chains;
+using Ocelot.Chain;
 using Ocelot.IPC;
 using Ocelot.States;
 
@@ -9,7 +10,7 @@ namespace BOCCHI.Modules.MobFarmer.States;
 public class BuffingHandler(MobFarmerModule module) : FarmerPhaseHandler(module)
 {
     private bool HasRunBuff = false;
-
+    private bool HasWait = false;
     public override void Enter()
     {
         base.Enter();
@@ -29,16 +30,20 @@ public class BuffingHandler(MobFarmerModule module) : FarmerPhaseHandler(module)
             return null;
         }
         
-        if (!Module.Config.ApplyBattleBell)
+        if (!HasWait)
         {
-            return FarmerPhase.Gathering;
-        }
-
-        if (Plugin.Chain.IsRunning)
-        {
+            HasWait = true;
+            Plugin.Chain.Submit(()=> Chain.Create("ExtraTimeToWait").Wait(Module.Config.ExtraTimeToWait * 1000));
             return null;
         }
-
+        
+        if (!Module.Config.ApplyBattleBell)
+        {
+            HasWait = false;
+            return FarmerPhase.Gathering;
+        }
+        
+        
         if (HasRunBuff)
         {
             HasRunBuff = false;
@@ -46,9 +51,10 @@ public class BuffingHandler(MobFarmerModule module) : FarmerPhaseHandler(module)
             {
                 Plugin.Chain.Submit(Actions.Sprint.GetCastChain());
             }
+            HasWait = false;
             return FarmerPhase.Gathering;
         }
-
+        
         Plugin.Chain.Submit(new BattleBellChain(Module));
         HasRunBuff = true;
 

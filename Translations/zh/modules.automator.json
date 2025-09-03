@@ -34,6 +34,10 @@
           "label": "参加CE",
           "tooltip": "选择运行时是否考虑参加CE"
         },
+        "stance_off_before_critical_encounters": {
+          "label": "参加CE前自动关盾",
+          "tooltip": "如果你为坦克职业，自动在参加CE前关闭盾姿"
+        },
         "min_distance": {
           "label": "最近距离",
           "tooltip": "设置待机位置距离CE中心的最近距离"
@@ -117,6 +121,10 @@
         "do_fates": {
           "label": "参加FATE",
           "tooltip": "选择运行时是否考虑参加FATE"
+        },
+        "stance_on_before_do_fates": {
+          "label": "参加FATE前自动开盾",
+          "tooltip": "如果你为坦克职业，自动在参加FATE前开启盾姿"
         },
         "do_rough_waters": {
           "label": "FATE: 涌潮海魔————纳木",

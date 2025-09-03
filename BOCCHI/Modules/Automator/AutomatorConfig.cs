@@ -59,6 +59,16 @@ public class AutomatorConfig : ModuleConfig
     [Checkbox]
     [DependsOn(nameof(DoCriticalEncounters))]
 
+    public bool StanceOffBeforeCriticalEncounters { get; set; } = false;
+    
+    public bool ShouldStanceOffBeforeCriticalEncounters
+    {
+        get => IsPropertyEnabled(nameof(StanceOffBeforeCriticalEncounters));
+    }
+    
+    [Checkbox]
+    [DependsOn(nameof(DoCriticalEncounters))]
+
     public bool DelayCriticalEncounters { get; set; } = false;
 
     private float _minDelay = 5f;
@@ -271,6 +281,16 @@ public class AutomatorConfig : ModuleConfig
         get => IsPropertyEnabled(nameof(DoFates));
     }
 
+    [Checkbox]
+    [DependsOn(nameof(DoFates))]
+
+    public bool StanceOnBeforeDoFates { get; set; } = false;
+    
+    public bool ShouldStanceOnBeforeDoFates
+    {
+        get => IsPropertyEnabled(nameof(StanceOnBeforeDoFates));
+    }
+    
     [Checkbox]
     [Indent]
     [DependsOn(nameof(DoFates))]

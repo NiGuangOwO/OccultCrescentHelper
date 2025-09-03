@@ -50,4 +50,6 @@ public class MobFarmerConfig : ModuleConfig
     [IntRange(0, 20)] public int MinimumMobsToStartLoop { get; set; } = 0;
 
     [IntRange(1, 20)] public int MinimumMobsToStartFight { get; set; } = 5;
+    
+    [IntRange(0, 20)] public int ExtraTimeToWait { get; set; } = 0;
 }

@@ -50,6 +50,10 @@
         "minimum_mobs_to_start_fight": {
           "label": "开始战斗所需怪物数",
           "tooltip": "停止拉怪开始战斗前需要聚集的怪物数量\n若无更多非战斗怪物，将无视条件直接开始战斗"
+        },
+        "extra_time_to_wait": {
+          "label": "开始拉怪前额外等待秒数",
+          "tooltip": "每次循环开始拉怪前，额外等待的秒数\n用于等待怪物的刷新"
         }
       }
     }
