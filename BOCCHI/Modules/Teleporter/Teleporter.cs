@@ -7,8 +7,8 @@ using Dalamud.Interface;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
@@ -31,7 +31,7 @@ public class Teleporter(TeleporterModule module)
             aethernet = ZoneData.GetClosestAethernetShard(destination);
         }
 
-        OcelotUI.Indent(() =>
+        OcelotUi.Indent(() =>
         {
             PathfindingButton(destination, name, id, ev);
             TeleportButton((Aethernet)aethernet, destination, name, id, ev);

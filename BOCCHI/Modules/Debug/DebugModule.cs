@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using BOCCHI.Modules.Debug.Panels;
 using ECommons;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Ocelot.Modules;
 
 namespace BOCCHI.Modules.Debug;

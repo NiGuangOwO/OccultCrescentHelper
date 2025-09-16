@@ -60,7 +60,7 @@ public class TeleporterModule : Module
             return;
         }
 
-        var addon = (AtkUnitBase*)args.Addon;
+        var addon = (AtkUnitBase*)args.Addon.Address;
         if (!addon->IsVisible)
         {
             return;

@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using BOCCHI.Data;
 using BOCCHI.Modules.Teleporter;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Fates;
 
@@ -11,8 +11,8 @@ public class Panel
 {
     public void Draw(FatesModule module)
     {
-        OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title($"{module.T("panel.title")}:");
+        OcelotUi.Indent(() =>
         {
             if (module.tracker.Fates.Count <= 0)
             {
@@ -51,11 +51,11 @@ public class Panel
                     teleporter.teleporter.Button(fate.Data.Aethernet, fate.StartPosition, fate.Name, $"fate_{fate.Id}", fate.Data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(fate.Data, module.PluginConfig.EventDropConfig));
+                OcelotUi.Indent(() => EventIconRenderer.Drops(fate.Data, module.PluginConfig.EventDropConfig));
 
                 if (!fate.Equals(module.fates.Values.Last()))
                 {
-                    OcelotUI.VSpace();
+                    OcelotUi.VSpace();
                 }
             }
         });

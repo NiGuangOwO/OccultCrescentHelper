@@ -1,6 +1,6 @@
 using System;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Automator;
 
@@ -8,10 +8,10 @@ public class Panel
 {
     public void Draw(AutomatorModule module)
     {
-        OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title($"{module.T("panel.title")}:");
+        OcelotUi.Indent(() =>
         {
-            OcelotUI.Title($"{module.T("panel.activity.label")}:");
+            OcelotUi.Title($"{module.T("panel.activity.label")}:");
             try
             {
                 var name = module.automator.Activity?.GetName() ?? module.T("panel.activity.none");
@@ -23,7 +23,7 @@ public class Panel
                 return;
             }
 
-            OcelotUI.Title($"{module.T("panel.activity_state.label")}:");
+            OcelotUi.Title($"{module.T("panel.activity_state.label")}:");
             ImGui.SameLine();
             ImGui.TextUnformatted(module.automator.Activity?.state.ToLabel() ?? module.T("panel.activity_state.none"));
         });

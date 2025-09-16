@@ -5,10 +5,10 @@ using System.Numerics;
 using BOCCHI.Data;
 using BOCCHI.Modules.Teleporter;
 using ECommons.DalamudServices;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Lumina.Data.Files;
 using Lumina.Excel.Sheets;
-using Ocelot;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Debug.Panels;
 
@@ -71,8 +71,8 @@ public class FatesPanel : Panel
 
     public override void Render(DebugModule module)
     {
-        OcelotUI.Title("Fates:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title("Fates:");
+        OcelotUi.Indent(() =>
         {
             foreach (var data in EventData.Fates.Values)
             {
@@ -85,11 +85,11 @@ public class FatesPanel : Panel
                     teleporter.teleporter.Button(data.Aethernet, start, data.InternalName, $"fate_{data.Id}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
+                OcelotUi.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
 
                 if (data.Id != EventData.Fates.Keys.Max())
                 {
-                    OcelotUI.VSpace();
+                    OcelotUi.VSpace();
                 }
             }
         });

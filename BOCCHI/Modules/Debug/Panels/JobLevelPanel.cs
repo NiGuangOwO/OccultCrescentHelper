@@ -3,7 +3,7 @@ using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using Lumina.Excel.Sheets;
-using Ocelot;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Debug.Panels;
 
@@ -20,21 +20,21 @@ public class JobLevelPanel : Panel
     {
         // var level = PublicContentOccultCrescent.GetState()->SupportJobLevels[1];
         var state = PublicContentOccultCrescent.GetState();
-        OcelotUI.Indent(() =>
+        OcelotUi.Indent(() =>
         {
             foreach (var job in Svc.Data.GetExcelSheet<MKDSupportJob>())
             {
-                OcelotUI.Title(job.Unknown0.ToString());
-                OcelotUI.Indent(() =>
+                OcelotUi.Title(job.Unknown0.ToString());
+                OcelotUi.Indent(() =>
                 {
                     var level = state->SupportJobLevels[(byte)job.RowId];
-                    OcelotUI.LabelledValue("Level", $"{level}/{job.Unknown10}");
+                    OcelotUi.LabelledValue("Level", $"{level}/{job.Unknown10}");
                 });
 
-                OcelotUI.Indent(() =>
+                OcelotUi.Indent(() =>
                 {
                     var exp = state->SupportJobExperience[(byte)job.RowId];
-                    OcelotUI.LabelledValue("Exp", exp);
+                    OcelotUi.LabelledValue("Exp", exp);
                 });
             }
         });

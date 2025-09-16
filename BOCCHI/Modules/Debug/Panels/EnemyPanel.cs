@@ -7,8 +7,8 @@ using ECommons.GameFunctions;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Debug.Panels;
 
@@ -23,13 +23,13 @@ public class EnemyPanel : Panel
 
     public override unsafe void Render(DebugModule module)
     {
-        OcelotUI.Indent(() =>
+        OcelotUi.Indent(() =>
         {
             foreach (var enemy in enemies)
             {
                 if (ImGui.CollapsingHeader($"{enemy.Name} - {enemy.DataId}##{enemy.ObjectIndex}"))
                 {
-                    OcelotUI.Indent(() =>
+                    OcelotUi.Indent(() =>
                     {
                         ImGui.Text($"Name: {enemy.Name.TextValue}");
                         ImGui.Text($"GameObjectId: {enemy.GameObjectId:X}");

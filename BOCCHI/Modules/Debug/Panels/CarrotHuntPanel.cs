@@ -17,8 +17,8 @@ using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using FFXIVClientStructs.FFXIV.Client.Game.Control;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 using Ocelot.Chain;
 using Ocelot.Chain.ChainEx;
 using Ocelot.IPC;
@@ -62,9 +62,9 @@ public class CarrotHuntPanel : Panel
     public override unsafe void Render(DebugModule module)
     {
         var vnav = module.GetIPCSubscriber<VNavmesh>();
-        OcelotUI.LabelledValue("Carrots", CarrotData.Data.Count); // 25
+        OcelotUi.LabelledValue("Carrots", CarrotData.Data.Count); // 25
 
-        OcelotUI.Indent(() =>
+        OcelotUi.Indent(() =>
         {
             if (ImGui.Button("Test carrot usage chain"))
             {
@@ -121,9 +121,9 @@ public class CarrotHuntPanel : Panel
 
             var Completion = (float)Progress / (float)MaxProgress * 100;
 
-            OcelotUI.LabelledValue("Progress: ", $"{Completion:f2}%");
-            OcelotUI.Indent(() => OcelotUI.LabelledValue("Calculations: ", $"{Progress}/{MaxProgress}"));
-            OcelotUI.LabelledValue("Elapsed: ", stopwatch.Elapsed.ToString("mm\\:ss"));
+            OcelotUi.LabelledValue("Progress: ", $"{Completion:f2}%");
+            OcelotUi.Indent(() => OcelotUi.LabelledValue("Calculations: ", $"{Progress}/{MaxProgress}"));
+            OcelotUi.LabelledValue("Elapsed: ", stopwatch.Elapsed.ToString("mm\\:ss"));
         });
     }
 

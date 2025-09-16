@@ -1,10 +1,8 @@
 ﻿using BOCCHI.Data;
 using BOCCHI.Modules.Teleporter;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using ImGuiNET;
-using Ocelot;
-using System;
-using System.Linq;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.CriticalEncounters;
 
@@ -12,8 +10,8 @@ public class Panel
 {
     public void Draw(CriticalEncountersModule module)
     {
-        OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title($"{module.T("panel.title")}:");
+        OcelotUi.Indent(() =>
         {
             var active = module.CriticalEncounters.Values.Count(ev => ev.State != DynamicEventState.Inactive);
             if (active <= 0)
@@ -89,7 +87,7 @@ public class Panel
 
                 if (ev.State != DynamicEventState.Register)
                 {
-                    OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
+                    OcelotUi.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
                     continue;
                 }
 
@@ -100,7 +98,7 @@ public class Panel
                     teleporter.teleporter.Button(data.Aethernet, start, ev.Name.ToString(), $"ce_{ev.DynamicEventId}", data);
                 }
 
-                OcelotUI.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
+                OcelotUi.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
             }
         });
     }
@@ -130,7 +128,7 @@ public class Panel
             OcelotUI.Indent(() => { OcelotUI.LabelledValue("两歧塔报名时间", $"{time:mm\\:ss}"); });
         }
 
-        OcelotUI.Indent(32, () =>
+        OcelotUi.Indent(32, () =>
         {
             OcelotUI.LabelledValue("紧急遭遇战已完成", module.Tracker.TowerTimer.CriticalEncountersCompleted);
             OcelotUI.LabelledValue("FATE已完成", module.Tracker.TowerTimer.FatesCompleted);
@@ -142,7 +140,7 @@ public class Panel
             return;
         }
 
-        OcelotUI.Indent(() =>
+        OcelotUi.Indent(() =>
         {
             OcelotUI.LabelledValue("平台上的玩家", TowerHelper.GetPlayersInTowerZone(TowerHelper.TowerType.Blood));
             if (ImGui.IsItemHovered())

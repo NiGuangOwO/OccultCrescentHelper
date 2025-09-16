@@ -1,5 +1,5 @@
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 using Ocelot.Chain;
 
 namespace BOCCHI.Modules.Debug.Panels;
@@ -13,11 +13,11 @@ public class ChainManagerPanel : Panel
 
     public override void Render(DebugModule module)
     {
-        OcelotUI.Title("Chain Manager:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title("Chain Manager:");
+        OcelotUi.Indent(() =>
         {
             var instances = ChainManager.Queues;
-            OcelotUI.Title("# of instances:");
+            OcelotUi.Title("# of instances:");
             ImGui.SameLine();
             ImGui.TextUnformatted(instances.Count.ToString());
 
@@ -28,19 +28,19 @@ public class ChainManagerPanel : Panel
                     continue;
                 }
 
-                OcelotUI.Title($"{pair.Key}:");
-                OcelotUI.Indent(() =>
+                OcelotUi.Title($"{pair.Key}:");
+                OcelotUi.Indent(() =>
                 {
                     var current = pair.Value.CurrentChain!;
-                    OcelotUI.Title("Current Chain:");
+                    OcelotUi.Title("Current Chain:");
                     ImGui.SameLine();
                     ImGui.TextUnformatted(current.Name);
 
-                    OcelotUI.Title("Progress:");
+                    OcelotUi.Title("Progress:");
                     ImGui.SameLine();
                     ImGui.TextUnformatted($"{current.Progress * 100}%");
 
-                    OcelotUI.Title("Queued Chains:");
+                    OcelotUi.Title("Queued Chains:");
                     ImGui.SameLine();
                     ImGui.TextUnformatted(pair.Value.QueueCount.ToString());
                 });

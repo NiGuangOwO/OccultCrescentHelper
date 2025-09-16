@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Dalamud.CN.NET.Sdk/12.0.2">
+<Project Sdk="Dalamud.CN.NET.Sdk/13.1.0">
     <PropertyGroup>
         <Version>0.69.1.11</Version>
         <Description>A helper for Occult Crescent.</Description>
@@ -11,6 +11,9 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <DefineConstants>DEBUG;TRACE;DEBUG_BUILD</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Release_CN'">
+        <DefineConstants>RELEASE;TRACE;DALAMUD_CN</DefineConstants>
     </PropertyGroup>
     <!-- Files -->
     <ItemGroup>

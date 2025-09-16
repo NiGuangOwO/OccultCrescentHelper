@@ -1,7 +1,7 @@
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Debug.Panels;
 
@@ -14,7 +14,7 @@ public class TargetPanel : Panel
 
     public override unsafe void Render(DebugModule module)
     {
-        OcelotUI.Indent(() =>
+        OcelotUi.Indent(() =>
         {
             var target = Svc.Targets.Target;
             if (target == null)
@@ -34,7 +34,7 @@ public class TargetPanel : Panel
 
             void Draw<T>(string label, T value)
             {
-                OcelotUI.Title($"{label}:");
+                OcelotUi.Title($"{label}:");
                 ImGui.SameLine();
                 ImGui.TextUnformatted(value?.ToString() ?? "null");
             }

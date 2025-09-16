@@ -1,5 +1,5 @@
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Carrots;
 
@@ -7,8 +7,8 @@ public class Panel
 {
     public void Draw(CarrotsModule module)
     {
-        OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title($"{module.T("panel.title")}:");
+        OcelotUi.Indent(() =>
         {
             if (module.carrots.Count <= 0)
             {

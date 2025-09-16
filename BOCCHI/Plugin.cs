@@ -40,7 +40,7 @@ public sealed class Plugin : OcelotPlugin
 
         SetupLanguage(plugin);
 
-        OcelotInitialize();
+        OcelotInitialize(OcelotFeature.All);
 
         ChainHelper.Initialize(this);
     }

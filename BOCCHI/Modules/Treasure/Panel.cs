@@ -1,7 +1,7 @@
 using System.Numerics;
 using ECommons.GameHelpers;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Treasure;
 
@@ -9,9 +9,9 @@ public class Panel
 {
     public void Draw(TreasureModule module)
     {
-        OcelotUI.Title($"{module.T("panel.title")}:");
+        OcelotUi.Title($"{module.T("panel.title")}:");
 
-        OcelotUI.Indent(() =>
+        OcelotUi.Indent(() =>
         {
             DrawActiveChests(module);
 
@@ -31,7 +31,7 @@ public class Panel
                 var pos = treasure.GetPosition();
 
                 ImGui.TextUnformatted($"{treasure.GetName()}");
-                OcelotUI.Indent(() =>
+                OcelotUi.Indent(() =>
                 {
                     ImGui.TextUnformatted($"({pos.X:F2}, {pos.Y:F2}, {pos.Z:F2})");
                     ImGui.TextUnformatted($"({Vector3.Distance(Player.Position, pos)})");
@@ -47,7 +47,7 @@ public class Panel
             return;
         }
 
-        OcelotUI.LabelledValue(module.T("panel.active_bronze.label"), $"{module.Tracker.BronzeChests}/30");
+        OcelotUi.LabelledValue(module.T("panel.active_bronze.label"), $"{module.Tracker.BronzeChests}/30");
         if (module.Config.ShowPercentageActiveTreasureCount)
         {
             var percentage = module.Tracker.BronzeChests / 30f * 100f;
@@ -55,7 +55,7 @@ public class Panel
             ImGui.TextUnformatted($"({percentage:f2}%)");
         }
 
-        OcelotUI.LabelledValue(module.T("panel.active_silver.label"), $"{module.Tracker.SilverChests}/8");
+        OcelotUi.LabelledValue(module.T("panel.active_silver.label"), $"{module.Tracker.SilverChests}/8");
         if (module.Config.ShowPercentageActiveTreasureCount)
         {
             var percentage = module.Tracker.SilverChests / 8f * 100f;

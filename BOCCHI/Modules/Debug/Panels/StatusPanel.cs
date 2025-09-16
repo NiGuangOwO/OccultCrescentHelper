@@ -1,8 +1,8 @@
 using System.Linq;
 using ECommons.DalamudServices;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Lumina.Excel.Sheets;
-using Ocelot;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Debug.Panels;
 
@@ -18,8 +18,8 @@ public class StatusPanel : Panel
         var data = Svc.Data.GetExcelSheet<Status>();
 
 
-        OcelotUI.Title("Statuses:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title("Statuses:");
+        OcelotUi.Indent(() =>
         {
             foreach (var s in Svc.ClientState.LocalPlayer!.StatusList)
             {

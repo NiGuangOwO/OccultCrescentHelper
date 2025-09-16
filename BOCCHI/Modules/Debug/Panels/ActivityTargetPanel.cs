@@ -9,9 +9,9 @@ using ECommons.DalamudServices;
 using ECommons.GameHelpers;
 using ECommons.Throttlers;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Lumina.Excel.Sheets;
-using Ocelot;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Debug.Panels;
 
@@ -26,7 +26,7 @@ public class ActivityTargetPanel : Panel
 
     public override unsafe void Render(DebugModule module)
     {
-        OcelotUI.Indent(() =>
+        OcelotUi.Indent(() =>
         {
             if (EzThrottler.Throttle("ActivityTargetPanel", 1000))
             {
@@ -36,12 +36,12 @@ public class ActivityTargetPanel : Panel
             foreach (var enemy in enemies)
             {
                 ImGui.TextUnformatted(enemy.Name.ToString());
-                OcelotUI.Indent(() =>
+                OcelotUi.Indent(() =>
                 {
-                    OcelotUI.LabelledValue("Object Kind", enemy.ObjectKind);
-                    OcelotUI.LabelledValue("Targetable", enemy.IsTargetable ? "Yes" : "No");
-                    OcelotUI.LabelledValue("Is Alive", enemy.IsDead ? "No" : "Yes");
-                    OcelotUI.LabelledValue("Is Activity Target", IsActivityTarget(enemy, module) ? "Yes" : "No");
+                    OcelotUi.LabelledValue("Object Kind", enemy.ObjectKind);
+                    OcelotUi.LabelledValue("Targetable", enemy.IsTargetable ? "Yes" : "No");
+                    OcelotUi.LabelledValue("Is Alive", enemy.IsDead ? "No" : "Yes");
+                    OcelotUi.LabelledValue("Is Activity Target", IsActivityTarget(enemy, module) ? "Yes" : "No");
                 });
             }
         });

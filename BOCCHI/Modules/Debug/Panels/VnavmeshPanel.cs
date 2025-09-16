@@ -1,6 +1,6 @@
 using System.Numerics;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 using Ocelot.IPC;
 
 namespace BOCCHI.Modules.Debug.Panels;
@@ -16,7 +16,7 @@ public class VnavmeshPanel : Panel
     {
         if (module.TryGetIPCSubscriber<VNavmesh>(out var vnav) && vnav!.IsReady())
         {
-            OcelotUI.Title("Vnav state:");
+            OcelotUi.Title("Vnav state:");
             ImGui.SameLine();
             ImGui.TextUnformatted(vnav.IsRunning() ? "Running" : "Pending");
 

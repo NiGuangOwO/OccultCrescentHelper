@@ -5,7 +5,7 @@ using Dalamud.Interface.Textures;
 using Dalamud.Interface.Textures.TextureWraps;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Lumina.Excel.Sheets;
 
 namespace BOCCHI.Data;
@@ -113,7 +113,7 @@ public struct EventIconRenderer
 
         ImGui.BeginChild($"ImageBorder##{id}", new Vector2(50, 50), true, ImGuiWindowFlags.NoScrollbar);
 
-        ImGui.Image(icon.ImGuiHandle, new Vector2(48, 48));
+        ImGui.Image(icon.Handle, new Vector2(48, 48));
 
         ImGui.EndChild();
 

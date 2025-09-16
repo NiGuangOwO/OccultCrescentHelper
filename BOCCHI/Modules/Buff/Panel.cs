@@ -1,8 +1,8 @@
 using BOCCHI.Data;
 using Dalamud.Interface;
 using ECommons.ImGuiMethods;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Buff;
 
@@ -10,8 +10,8 @@ public class Panel
 {
     public void Draw(BuffModule module)
     {
-        OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title($"{module.T("panel.title")}:");
+        OcelotUi.Indent(() =>
         {
             var isNearKnowledgeCrystal = ZoneData.IsNearKnowledgeCrystal();
             var isQueued = module.BuffManager.IsQueued();

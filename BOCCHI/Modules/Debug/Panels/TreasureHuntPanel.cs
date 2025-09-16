@@ -12,8 +12,8 @@ using BOCCHI.Modules.Data;
 using BOCCHI.Pathfinding;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.LayoutEngine;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 using Ocelot.Chain;
 using Ocelot.IPC;
 
@@ -86,10 +86,10 @@ public class TreasureHuntPanel : Panel
 
     public override void Render(DebugModule module)
     {
-        OcelotUI.LabelledValue("Bronze", Treasure.Count(t => t.type == 1596)); // 60
-        OcelotUI.LabelledValue("Silver", Treasure.Count(t => t.type == 1597)); // 8
+        OcelotUi.LabelledValue("Bronze", Treasure.Count(t => t.type == 1596)); // 60
+        OcelotUi.LabelledValue("Silver", Treasure.Count(t => t.type == 1597)); // 8
 
-        OcelotUI.Indent(() =>
+        OcelotUi.Indent(() =>
         {
             if (!HasRun)
             {
@@ -103,9 +103,9 @@ public class TreasureHuntPanel : Panel
 
             var Completion = (float)Progress / (float)MaxProgress * 100;
 
-            OcelotUI.LabelledValue("Progress: ", $"{Completion:f2}%");
-            OcelotUI.Indent(() => OcelotUI.LabelledValue("Calculations: ", $"{Progress}/{MaxProgress}"));
-            OcelotUI.LabelledValue("Elapsed: ", stopwatch.Elapsed.ToString("mm\\:ss"));
+            OcelotUi.LabelledValue("Progress: ", $"{Completion:f2}%");
+            OcelotUi.Indent(() => OcelotUi.LabelledValue("Calculations: ", $"{Progress}/{MaxProgress}"));
+            OcelotUi.LabelledValue("Elapsed: ", stopwatch.Elapsed.ToString("mm\\:ss"));
         });
     }
 

@@ -6,8 +6,9 @@ using BOCCHI.Modules.StateManager;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons.Automation.NeoTaskManager;
 using ECommons.GameHelpers;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Ocelot;
+using Ocelot.Ui;
 using Ocelot.Chain;
 using Ocelot.IPC;
 using Ocelot.Modules;
@@ -178,8 +179,8 @@ public abstract class Hunter
 
     public void Draw(Module<Plugin, Config> module)
     {
-        OcelotUI.Title($"{module.T("panel.hunt.title")}:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title($"{module.T("panel.hunt.title")}:");
+        OcelotUi.Indent(() =>
         {
             if (ImGui.Button(running ? I18N.T("generic.label.stop") : I18N.T("generic.label.start")))
             {
@@ -214,22 +215,22 @@ public abstract class Hunter
                     ImGui.SetTooltip(I18N.T("hunter.export.tooltip"));
                 }
 
-                OcelotUI.LabelledValue(I18N.T("hunter.elapsed"), $"{stopwatch.Elapsed:mm\\:ss}");
+                OcelotUi.LabelledValue(I18N.T("hunter.elapsed"), $"{stopwatch.Elapsed:mm\\:ss}");
             }
 
 
             if (running && Steps.Count > 0)
             {
-                OcelotUI.LabelledValue(I18N.T("hunter.progress"), $"{stepIndex}/{Steps.Count}");
+                OcelotUi.LabelledValue(I18N.T("hunter.progress"), $"{stepIndex}/{Steps.Count}");
 
                 if (CurrentStep.Type == PathfinderStepType.WalkToNode)
                 {
-                    OcelotUI.LabelledValue(module.T("panel.hunt.distance_node"), $"{distance:f2}/{GetDetectionRange():f2}");
+                    OcelotUi.LabelledValue(module.T("panel.hunt.distance_node"), $"{distance:f2}/{GetDetectionRange():f2}");
                 }
 
                 if (CurrentStep.Type == PathfinderStepType.WalkToAethernet)
                 {
-                    OcelotUI.LabelledValue(I18N.T("hunter.distance_shard"), $"{distance:f2}");
+                    OcelotUi.LabelledValue(I18N.T("hunter.distance_shard"), $"{distance:f2}");
                 }
             }
         });

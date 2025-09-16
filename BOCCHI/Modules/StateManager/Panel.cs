@@ -1,5 +1,5 @@
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.StateManager;
 
@@ -12,8 +12,8 @@ public class Panel
             return false;
         }
 
-        OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() => ImGui.TextUnformatted($"{module.T("panel.state.label")}: {module.GetStateText()}"));
+        OcelotUi.Title($"{module.T("panel.title")}:");
+        OcelotUi.Indent(() => ImGui.TextUnformatted($"{module.T("panel.state.label")}: {module.GetStateText()}"));
 
         return true;
     }

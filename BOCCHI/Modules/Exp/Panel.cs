@@ -1,7 +1,7 @@
 using Dalamud.Interface;
 using ECommons.ImGuiMethods;
-using ImGuiNET;
-using Ocelot;
+using Dalamud.Bindings.ImGui;
+using Ocelot.Ui;
 
 namespace BOCCHI.Modules.Exp;
 
@@ -9,8 +9,8 @@ public class Panel
 {
     public void Draw(ExpModule module)
     {
-        OcelotUI.Title($"{module.T("panel.title")}:");
-        OcelotUI.Indent(() =>
+        OcelotUi.Title($"{module.T("panel.title")}:");
+        OcelotUi.Indent(() =>
         {
             if (ImGuiEx.IconButton(FontAwesomeIcon.Redo, $"Reset##Exp"))
             {

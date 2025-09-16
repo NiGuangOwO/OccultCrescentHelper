@@ -1,4 +1,4 @@
-﻿{
+{
   "modules": {
     "automator": {
       "config": {
@@ -190,7 +190,7 @@
           "none": "等待运行"
         },
         "lens": {
-          "title": "BOCCHI 非法镜头"
+          "title": "BOCCHI 非法模式"
         }
       },
       "messages": {
