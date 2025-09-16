@@ -1,7 +1,8 @@
 ﻿using BOCCHI.Data;
 using BOCCHI.Modules.Automator;
-using Dalamud.Interface;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Interface;
+using Dalamud.Interface.Colors;
 using Ocelot;
 using Ocelot.Windows;
 using System.Numerics;
