@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Dalamud.CN.NET.Sdk/13.1.0">
     <PropertyGroup>
-        <Version>0.69.1.11</Version>
+        <Version>0.69.1.12</Version>
         <Description>A helper for Occult Crescent.</Description>
         <PackageProjectUrl>https://github.com/OhKannaDuh/OccultCrescentHelper</PackageProjectUrl>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
