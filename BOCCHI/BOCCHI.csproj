@@ -31,9 +31,6 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="TextCopy" Version="6.2.1" />
-    </ItemGroup>
-    <ItemGroup>
       <ProjectReference Include="..\..\ECommons\ECommons\ECommons.csproj" />
       <ProjectReference Include="..\..\Ocelot\Ocelot\Ocelot.csproj" />
     </ItemGroup>
