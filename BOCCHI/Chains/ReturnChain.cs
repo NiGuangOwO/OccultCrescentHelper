@@ -64,13 +64,13 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
         var chain = Chain.Create();
 
         if (!auto.Config.ShouldChangeLowLevelJob
-            || state->SupportJobLevels[currentJob.ByteId] < Svc.Data.GetExcelSheet<MKDSupportJob>().GetRow(currentJob.ByteId).Unknown10)
+            || state->SupportJobLevels[currentJob.ByteId] < Svc.Data.GetExcelSheet<MKDSupportJob>().GetRow(currentJob.ByteId).LevelMax)
             return chain;
 
         foreach (var job in Svc.Data.GetExcelSheet<MKDSupportJob>())
         {
             var level = state->SupportJobLevels[(byte)job.RowId];
-            if (level == 0 || level >= job.Unknown10)
+            if (level == 0 || level >= job.LevelMax)
             {
                 continue;
             }

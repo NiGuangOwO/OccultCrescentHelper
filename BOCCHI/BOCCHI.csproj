@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Dalamud.CN.NET.Sdk/13.1.0">
+<Project Sdk="Dalamud.CN.NET.Sdk/14.0.0">
     <PropertyGroup>
         <Version>0.69.1.12</Version>
         <Description>A helper for Occult Crescent.</Description>
@@ -8,6 +8,7 @@
         <IsPackable>false</IsPackable>
         <NoWarn>$(NoWarn);4014</NoWarn>
         <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=$(MSBuildProjectName)/</PathMap>
+        <TargetFramework>net10.0-windows7.0</TargetFramework>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <DefineConstants>DEBUG;TRACE;DEBUG_BUILD</DefineConstants>
@@ -31,7 +32,8 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\ECommons\ECommons\ECommons.csproj" />
-      <ProjectReference Include="..\..\Ocelot\Ocelot\Ocelot.csproj" />
+      <PackageReference Include="ECommons" Version="3.1.0.3" />
+      <PackageReference Include="FFXIVOcelot" Version="1.1.2" />
+      <PackageReference Include="TextCopy" Version="6.2.1" />
     </ItemGroup>
 </Project>

@@ -1,12 +1,12 @@
-using System;
-using System.Linq;
-using BOCCHI.Data;
+﻿using BOCCHI.Data;
 using BOCCHI.Modules.CriticalEncounters;
 using BOCCHI.Modules.Teleporter;
+using Dalamud.Bindings.ImGui;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
-using Dalamud.Bindings.ImGui;
 using Ocelot.Ui;
+using System;
+using System.Linq;
 
 namespace BOCCHI.Modules.Debug.Panels;
 

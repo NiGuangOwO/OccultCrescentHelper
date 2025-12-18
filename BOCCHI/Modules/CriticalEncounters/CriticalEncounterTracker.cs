@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using BOCCHI.Data;
+﻿using BOCCHI.Data;
 using BOCCHI.Modules.Fates;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BOCCHI.Modules.CriticalEncounters;
 
@@ -35,9 +35,14 @@ public class CriticalEncounterTracker
 
     public unsafe void Tick(IFramework _)
     {
+        //var i = 0;
+        //foreach (var item in PublicContentOccultCrescent.GetInstance()->DynamicEventContainer.Events)
+        //{
+        //    Svc.Log.Debug($"{i} Event ID: {item.DynamicEventId}, State: {item.State}, Progress: {item.Progress}");
+        //    i++;
+        //}
         CriticalEncounters = PublicContentOccultCrescent.GetInstance()->DynamicEventContainer.Events
-            .ToArray()
-            .ToDictionary(ev => (uint)ev.DynamicEventId, ev => ev);
+    .ToArray().GroupBy(ev => (uint)ev.DynamicEventId).ToDictionary(g => g.Key, g => g.First());
 
         foreach (var ev in CriticalEncounters.Values)
         {
