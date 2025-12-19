@@ -29,6 +29,12 @@ public enum PlayerStatus : uint
     PhantomChemist = 4367,
     PhantomOracle = 4368,
     PhantomThief = 4369,
+    // 7.4 additions
+    QuickerStep = 4799, // Dancer buff
+    PhantomMysticKnight = 4803,
+    PhantomGladiator = 4804,
+    PhantomDancer = 4805,
+    
 }
 
 public static class StatusListExtensions

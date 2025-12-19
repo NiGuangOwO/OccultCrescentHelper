@@ -122,6 +122,13 @@
           "NETStandard.Library": "1.6.1",
           "SharpDX": "4.2.0"
         }
+      },
+      "FFXIVOcelot": {
+        "type": "Project",
+        "dependencies": {
+          "Ecommons": "[3.1.0.2, )",
+          "Pictomancy": "[0.0.2, )"
+        }
       }
     }
   }

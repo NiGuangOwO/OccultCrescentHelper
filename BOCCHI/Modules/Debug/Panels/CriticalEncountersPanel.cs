@@ -109,25 +109,25 @@ public class CriticalEncountersPanel : Panel
         ImGui.SameLine();
         ImGui.TextUnformatted(ev.Announce.ToString());
 
-        OcelotUi.Title("Unknown0:");
-        ImGui.SameLine();
-        ImGui.TextUnformatted(ev.Unknown0.ToString());
-
-        OcelotUi.Title("Unknown1:");
-        ImGui.SameLine();
-        ImGui.TextUnformatted(ev.Unknown1.ToString());
-
-        OcelotUi.Title("Unknown6:");
-        ImGui.SameLine();
-        ImGui.TextUnformatted(ev.Unknown6.ToString());
-
-        OcelotUi.Title("Unknown7:");
-        ImGui.SameLine();
-        ImGui.TextUnformatted(ev.Unknown7.ToString());
-
-        OcelotUi.Title("Unknown2:");
-        ImGui.SameLine();
-        ImGui.TextUnformatted(ev.Unknown2.ToString());
+        // OcelotUi.Title("Unknown0:");
+        // ImGui.SameLine();
+        // ImGui.TextUnformatted(ev.Unknown0.ToString());
+        //
+        // OcelotUi.Title("Unknown1:");
+        // ImGui.SameLine();
+        // ImGui.TextUnformatted(ev.Unknown1.ToString());
+        //
+        // OcelotUi.Title("Unknown6:");
+        // ImGui.SameLine();
+        // ImGui.TextUnformatted(ev.Unknown6.ToString());
+        //
+        // OcelotUi.Title("Unknown7:");
+        // ImGui.SameLine();
+        // ImGui.TextUnformatted(ev.Unknown7.ToString());
+        //
+        // OcelotUi.Title("Unknown2:");
+        // ImGui.SameLine();
+        // ImGui.TextUnformatted(ev.Unknown2.ToString());
 
         OcelotUi.Title("Event Type (RowId):");
         ImGui.SameLine();
@@ -141,21 +141,21 @@ public class CriticalEncountersPanel : Panel
         ImGui.SameLine();
         ImGui.TextUnformatted(ev.MaxParticipants.ToString());
 
-        OcelotUi.Title("Radius?:");
-        ImGui.SameLine();
-        ImGui.TextUnformatted(ev.Unknown4.ToString());
+        // OcelotUi.Title("Radius?:");
+        // ImGui.SameLine();
+        // ImGui.TextUnformatted(ev.Unknown4.ToString());
 
-        OcelotUi.Title("Unknown5:");
-        ImGui.SameLine();
-        ImGui.TextUnformatted(ev.Unknown5.ToString());
+        // OcelotUi.Title("Unknown5:");
+        // ImGui.SameLine();
+        // ImGui.TextUnformatted(ev.Unknown5.ToString());
 
         OcelotUi.Title("Single Battle (RowId):");
         ImGui.SameLine();
         ImGui.TextUnformatted(ev.SingleBattle.ToString());
 
-        OcelotUi.Title("Unknown8:");
-        ImGui.SameLine();
-        ImGui.TextUnformatted(ev.Unknown8.ToString());
+        // OcelotUi.Title("Unknown8:");
+        // ImGui.SameLine();
+        // ImGui.TextUnformatted(ev.Unknown8.ToString());
 
         OcelotUi.Title("Start Timestamp:");
         ImGui.SameLine();
