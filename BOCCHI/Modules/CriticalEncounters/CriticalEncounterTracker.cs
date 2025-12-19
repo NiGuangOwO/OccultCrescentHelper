@@ -35,14 +35,9 @@ public class CriticalEncounterTracker
 
     public unsafe void Tick(IFramework _)
     {
-        //var i = 0;
-        //foreach (var item in PublicContentOccultCrescent.GetInstance()->DynamicEventContainer.Events)
-        //{
-        //    Svc.Log.Debug($"{i} Event ID: {item.DynamicEventId}, State: {item.State}, Progress: {item.Progress}");
-        //    i++;
-        //}
         CriticalEncounters = PublicContentOccultCrescent.GetInstance()->DynamicEventContainer.Events
-    .ToArray().GroupBy(ev => (uint)ev.DynamicEventId).ToDictionary(g => g.Key, g => g.First());
+            .ToArray()
+            .ToDictionary(ev => (uint)ev.DynamicEventId, ev => ev);
 
         foreach (var ev in CriticalEncounters.Values)
         {

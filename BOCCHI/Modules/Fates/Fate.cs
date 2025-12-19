@@ -1,9 +1,10 @@
-﻿using System;
-using System.Numerics;
-using BOCCHI.Data;
+﻿using BOCCHI.Data;
 using BOCCHI.Enums;
 using Dalamud.Game.ClientState.Fates;
+using ECommons;
 using Ocelot.Modules;
+using System;
+using System.Numerics;
 
 namespace BOCCHI.Modules.Fates;
 
@@ -32,7 +33,7 @@ public class Fate(IFate fate)
         {
             try
             {
-                return fate.Name.ToString();
+                return fate.Name.GetText();
             }
             catch (AccessViolationException)
             {

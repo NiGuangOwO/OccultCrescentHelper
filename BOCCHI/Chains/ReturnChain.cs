@@ -48,7 +48,7 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
 
             chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, position, 3));
             chain.Then(_ => lifestream.GetActiveCustomAetheryte() != 0);
-            chain.Then(_ => Svc.Targets.Target = Svc.Objects.FirstOrDefault(o => o.DataId == AethernetData.GetClosestToPlayer().DataId));
+            chain.Then(_ => Svc.Targets.Target = Svc.Objects.FirstOrDefault(o => o.BaseId == AethernetData.GetClosestToPlayer().BaseId));
             chain.Then(_ => vnav.Stop());
         }
 
