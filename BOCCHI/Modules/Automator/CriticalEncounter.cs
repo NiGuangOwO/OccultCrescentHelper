@@ -50,7 +50,7 @@ public class CriticalEncounter : Activity
                 // Get all players in the zone
                 var playersInZone = Svc.Objects
                     .Where(o => o.ObjectKind == ObjectKind.Player)
-                    .Where(o => Vector3.Distance(o.Position, GetPosition()) <= GetRadius())
+                    .Where(o => Vector3.Distance(o.Position, GetPosition()) <= (data.Radius ?? GetRadius()))
                     .ToList();
 
                 if (playersInZone.Count > 4)
@@ -161,7 +161,8 @@ public class CriticalEncounter : Activity
     protected override float GetRadius()
     {
         // This is kind of an assumption, but it seems accurate enough for most encounters.
-        return Encounter.Unknown4;
+        // return Encounter.Unknown4;
+        return 30f;
     }
 
     protected override Vector3 GetPosition()
