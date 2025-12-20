@@ -50,7 +50,7 @@ public class CriticalEncounter : Activity
             {
                 var rand = module.GetModule<AutomatorModule>().random;
                 var angle = (float)(rand.NextDouble() * MathF.PI * 2);
-                var distance = (float)(rand.NextDouble() * (data.Radius ?? GetRadius()));
+                var distance = (float)(rand.NextDouble() * 20f);
                 var offsetX = MathF.Cos(angle) * distance;
                 var offsetZ = MathF.Sin(angle) * distance;
 
