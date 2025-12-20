@@ -48,43 +48,17 @@ public class CriticalEncounter : Activity
 
             if (!finalDestination && IsCloseToZone())
             {
-                // Get all players in the zone
-                var playersInZone = Svc.Objects
-                    .Where(o => o.ObjectKind == ObjectKind.Player)
-                    .Where(o => Vector3.Distance(o.Position, GetPosition()) <= (data.Radius ?? GetRadius()))
-                    .ToList();
+                var rand = module.GetModule<AutomatorModule>().random;
+                var angle = (float)(rand.NextDouble() * MathF.PI * 2);
+                var distance = (float)(rand.NextDouble() * (data.Radius ?? GetRadius()));
+                var offsetX = MathF.Cos(angle) * distance;
+                var offsetZ = MathF.Sin(angle) * distance;
 
-                if (playersInZone.Count > 0)
-                {
-                    var minX = playersInZone.Min(p => p.Position.X);
-                    var maxX = playersInZone.Max(p => p.Position.X);
-                    var minY = playersInZone.Min(p => p.Position.Z);
-                    var maxY = playersInZone.Max(p => p.Position.Z);
-                    var rand = module.GetModule<AutomatorModule>().random;
+                var randomPoint = new Vector3(GetPosition().X + offsetX, GetPosition().Y, GetPosition().Z + offsetZ);
+                module.Debug($"Pathfinding to random point: {randomPoint}");
 
-                    // 处理所有玩家位置相同的情况
-                    if (minX == maxX)
-                    {
-                        var randomOffset = (float)(rand.NextDouble() * 2.0);
-                        maxX += randomOffset;
-                    }
-
-                    if (minY == maxY)
-                    {
-                        var randomOffset = (float)(rand.NextDouble() * 2.0);
-                        maxY += randomOffset;
-                    }
-
-                    // Choose a random point within the bounding box of players
-                    var randX = (float)(minX + rand.NextDouble() * (maxX - minX));
-                    var randY = (float)(minY + rand.NextDouble() * (maxY - minY));
-                    var randomPoint = new Vector3(randX, GetPosition().Y, randY);
-
-                    module.Debug($"Pathfinding to random point: {randomPoint} (MinX: {minX}, MaxX: {maxX}, MinY: {minY}, MaxY: {maxY})");
-
-                    vnav.PathfindAndMoveTo(randomPoint, false);
-                    finalDestination = true;
-                }
+                vnav.PathfindAndMoveTo(randomPoint, false);
+                finalDestination = true;
             }
 
             if (!finalDestination && IsInZone())
