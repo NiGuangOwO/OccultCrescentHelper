@@ -162,7 +162,7 @@ public class CriticalEncounter : Activity
     {
         // This is kind of an assumption, but it seems accurate enough for most encounters.
         // return Encounter.Unknown4;
-        return 30f;
+        return 19f;
     }
 
     protected override Vector3 GetPosition()
