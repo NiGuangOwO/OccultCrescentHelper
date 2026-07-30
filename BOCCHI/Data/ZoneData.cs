@@ -13,16 +13,19 @@ namespace BOCCHI.Data;
 public static class ZoneData
 {
     public const uint SOUTHHORN = 1252;
+    public const uint NORTHHORN = 1346;
 
     // This can and should be filled using layout files or excel data
     public readonly static Dictionary<uint, Vector3> Aetherytes = new()
     {
         { SOUTHHORN, new Vector3(830.75f, 72.98f, -695.98f) },
+        { NORTHHORN, new Vector3(880.0015f, 259.7396f, 880.0587f) },
     };
 
     public readonly static Dictionary<uint, Vector3> StartingLocations = new()
     {
         { SOUTHHORN, new Vector3(850.33f, 72.99f, -704.07f) },
+        { NORTHHORN, new Vector3(888.4536f, 258.5f, 882.024f) },
     };
 
     // Zone functions
@@ -31,9 +34,14 @@ public static class ZoneData
         return Svc.ClientState.TerritoryType == SOUTHHORN;
     }
 
+    public static bool IsInNorthHorn()
+    {
+        return Svc.ClientState.TerritoryType == NORTHHORN;
+    }
+
     public static bool IsInOccultCrescent()
     {
-        return Svc.Objects.LocalPlayer != null && IsInSouthHorn();
+        return Svc.Objects.LocalPlayer != null && (IsInSouthHorn() || IsInNorthHorn());
     }
 
     // Tower functions
@@ -64,7 +72,12 @@ public static class ZoneData
             return "South Horn";
         }
 
-        throw new Exception("Unknown Zone");
+        if (IsInNorthHorn())
+        {
+            return "North Horn";
+        }
+
+        return "Unknown Zone";
     }
 
     public static string GetCurrentZoneDataDirectory()

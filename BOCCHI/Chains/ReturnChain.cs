@@ -63,19 +63,42 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
         var currentJob = Job.Current;
         var chain = Chain.Create();
 
-        if (!auto.Config.ShouldChangeLowLevelJob
-            || state->SupportJobLevels[currentJob.ByteId] < Svc.Data.GetExcelSheet<MKDSupportJob>().GetRow(currentJob.ByteId).LevelMax)
+        if (!auto.Config.ShouldChangeLowLevelJob)
             return chain;
 
+        // Freelancer's actual level cap is dynamic — it depends on how many other jobs are maxed.
+        // The static LevelMax from the Excel sheet is only the theoretical maximum.
+        // Dynamic cap formula: 1 + number of maxed-out non-Freelancer jobs.
+        var freelancerCap = Svc.Data.GetExcelSheet<MKDSupportJob>()
+            .Count(j => j.RowId != 0 && state->SupportJobLevels[(byte)j.RowId] >= j.LevelMax) + 1;
+
+        var currentLevel = state->SupportJobLevels[currentJob.ByteId];
+        var jobMaxLevel = currentJob.id == JobId.Freelancer
+            ? freelancerCap
+            : Svc.Data.GetExcelSheet<MKDSupportJob>().GetRow(currentJob.ByteId).LevelMax;
+
+        if (currentLevel < jobMaxLevel)
+            return chain;
+
+        // First pass: try to switch to any non-Freelancer job that still has room to level
         foreach (var job in Svc.Data.GetExcelSheet<MKDSupportJob>())
         {
+            if (job.RowId == 0)
+                continue;
+
             var level = state->SupportJobLevels[(byte)job.RowId];
             if (level == 0 || level >= job.LevelMax)
-            {
                 continue;
-            }
 
             chain.Then(_ => PublicContentOccultCrescent.ChangeSupportJob((byte)job.RowId));
+            return chain;
+        }
+
+        // Second pass: if no other jobs need leveling, fall back to Freelancer (using dynamic cap)
+        var freelancerLevel = state->SupportJobLevels[0];
+        if (freelancerLevel > 0 && freelancerLevel < freelancerCap)
+        {
+            chain.Then(_ => PublicContentOccultCrescent.ChangeSupportJob(0));
             return chain;
         }
 
@@ -93,8 +116,8 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
         chain.BreakIf(() => !buffs.ShouldRefreshBuffs() || !vnav.IsReady() || closestKnowledgeCrystal == null);
         chain.Then(_ => Actions.TryUnmount());
 
-        chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, closestKnowledgeCrystal!.Position, 3));
-        chain.WaitUntilNear(vnav, closestKnowledgeCrystal!.Position, 3);
+        chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, closestKnowledgeCrystal!.Position, 2));
+        chain.WaitUntilNear(vnav, closestKnowledgeCrystal!.Position, 2);
         chain.Then(_ => vnav.Stop());
 
         chain.Then(new AllBuffsChain(buffs));

@@ -28,7 +28,7 @@ public class AutomatorModule : Module
 
     public readonly Panel panel = new();
 
-    private readonly List<uint> occultCrescentTerritoryIds = [1252];
+    private readonly List<uint> occultCrescentTerritoryIds = [1252, 1346];
 
     public readonly Random random = new();
 

@@ -18,7 +18,7 @@ public class WindowManagerModule(Plugin _plugin, Config _config) : Module(_plugi
     }
 
 
-    private readonly List<uint> occultCrescentTerritoryIds = [1252];
+    private readonly List<uint> occultCrescentTerritoryIds = [1252, 1346];
 
     private bool mainClosed = false;
 
