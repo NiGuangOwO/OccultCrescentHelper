@@ -74,20 +74,22 @@ public class FatesPanel : Panel
         OcelotUi.Title("Fates:");
         OcelotUi.Indent(() =>
         {
+            var maxId = EventData.Fates.Keys.Max();
+
             foreach (var data in EventData.Fates.Values)
             {
                 ImGui.TextUnformatted(data.InternalName);
 
-                if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady())
+                // FateLocations 只在 LGB 文件里存在对应 Instance 对象时才包含该 Fate，坐标缺失时跳过传送按钮
+                if (module.TryGetModule<TeleporterModule>(out var teleporter) && teleporter!.IsReady()
+                    && FateLocations.TryGetValue(data.Id, out var start))
                 {
-                    var start = FateLocations[data.Id];
-
                     teleporter.teleporter.Button(data.Aethernet, start, data.InternalName, $"fate_{data.Id}", data);
                 }
 
                 OcelotUi.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
 
-                if (data.Id != EventData.Fates.Keys.Max())
+                if (data.Id != maxId)
                 {
                     OcelotUi.VSpace();
                 }

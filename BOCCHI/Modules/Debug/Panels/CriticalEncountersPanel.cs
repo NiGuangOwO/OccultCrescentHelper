@@ -22,9 +22,23 @@ public class CriticalEncountersPanel : Panel
         OcelotUi.Title("Critical Encounters:");
         OcelotUi.Indent(() =>
         {
+            var ceModule = module.GetModule<CriticalEncountersModule>();
+            var maxId = EventData.CriticalEncounters.Keys.Max();
+
             foreach (var data in EventData.CriticalEncounters.Values)
             {
-                var ev = module.GetModule<CriticalEncountersModule>().CriticalEncounters[data.Id];
+                // 运行时字典只包含当前活跃的事件，未刷新的 CE 可能不在其中，此时显示静态信息并跳过
+                if (!ceModule.CriticalEncounters.TryGetValue(data.Id, out var ev))
+                {
+                    ImGui.TextUnformatted($"{data.InternalName} (Not Active)");
+
+                    if (data.Id != maxId)
+                    {
+                        OcelotUi.VSpace();
+                    }
+
+                    continue;
+                }
 
                 ImGui.TextUnformatted(ev.Name.ToString());
 
@@ -65,7 +79,7 @@ public class CriticalEncountersPanel : Panel
 
                 OcelotUi.Indent(() => EventIconRenderer.Drops(data, module.PluginConfig.EventDropConfig));
 
-                if (data.Id != EventData.CriticalEncounters.Keys.Max())
+                if (data.Id != maxId)
                 {
                     OcelotUi.VSpace();
                 }

@@ -10,14 +10,19 @@ public class AllBuffsChain(BuffModule module) : ChainFactory
 
     protected override Chain Create(Chain chain)
     {
-        chain
-            .Then(new FreelancerBuffChain(module))
-            .Then(new KnightBuffChain(module))
-            .Then(new MonkBuffChain(module))
-            .Then(new BardBuffChain(module))
-            .Then(new DancerBuffChain(module))
-            .Then(StartingJob.ChangeToChain);
+        if (module.Config.UseInquiringMind)
+        {
+            chain.Then(new FreelancerBuffChain(module));
+        }
+        else
+        {
+            chain.Then(new KnightBuffChain(module))
+          .Then(new MonkBuffChain(module))
+          .Then(new BardBuffChain(module))
+          .Then(new DancerBuffChain(module));
+        }
 
+        chain.Then(StartingJob.ChangeToChain);
         return chain;
     }
 

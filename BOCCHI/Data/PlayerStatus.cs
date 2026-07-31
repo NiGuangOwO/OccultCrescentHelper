@@ -35,6 +35,30 @@ public enum PlayerStatus : uint
     PhantomGladiator = 4804,
     PhantomDancer = 4805,
 
+    // 7.55 North Horn additions
+    PhantomNinja = 5328,
+    PhantomWhiteMage = 5329,
+    PhantomBlackMage = 5330,
+    PhantomDragoon = 5331,
+    PhantomSummoner = 5332,
+    PhantomBlueMage = 5333,
+    PhantomRedMage = 5334,
+    PhantomNecromancer = 5335,
+
+    WeaknessFire = 5322,
+    WeaknessIce = 5323,
+    WeaknessLightning = 5324,
+    WeaknessWind = 5325,
+
+    // CN 7.55 action statuses verified from the Status sheet.  These are
+    // exposed for feature integrations, but are not auto-applied because most
+    // are short combat effects rather than persistent cross-job buffs.
+    MagicEvasion = 5316,
+    DragonSword = 5319,
+    EarthenWall = 5320,
+    MagicMightyGuard = 5321,
+    SmokeBomb = 5327,
+
 }
 
 public static class StatusListExtensions
