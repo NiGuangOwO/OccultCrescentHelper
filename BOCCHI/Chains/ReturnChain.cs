@@ -117,7 +117,7 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
         chain.Then(_ => Actions.TryUnmount());
 
         chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, closestKnowledgeCrystal!.Position));
-        chain.WaitUntilNear(vnav, closestKnowledgeCrystal!.Position, 3);
+        chain.WaitUntilNear(vnav, closestKnowledgeCrystal!.Position, 1);
         chain.Then(_ => vnav.Stop());
 
         chain.Then(new AllBuffsChain(buffs));

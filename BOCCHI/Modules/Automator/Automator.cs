@@ -44,14 +44,25 @@ public class Automator
             if (states.GetState() == State.InCriticalEncounter)
             {
                 var critical = module.GetModule<CriticalEncountersModule>();
-                var encounter = critical.CriticalEncounters.Values.Last(ev => ev.State != DynamicEventState.Inactive);
-                var data = EventData.CriticalEncounters[encounter.DynamicEventId];
-                Activity = new CriticalEncounter(data, lifestream, vnav, module, critical);
 
-                if (Activity != null)
+                // CE 结束瞬间所有事件可能都已变为 Inactive（或字典被清空），此时没有可恢复的活动，跳过本帧
+                var active = critical.CriticalEncounters.Values
+                    .Where(ev => ev.State != DynamicEventState.Inactive)
+                    .ToArray();
+                if (active.Length == 0)
                 {
-                    module.Debug($"Resuming running activity: {Activity.GetName()}");
+                    return;
                 }
+
+                // 运行时事件 id 可能不在静态定义表中，取不到定义时同样跳过
+                if (!EventData.CriticalEncounters.TryGetValue(active[^1].DynamicEventId, out var data))
+                {
+                    return;
+                }
+
+                var encounter = active[^1];
+                Activity = new CriticalEncounter(data, lifestream, vnav, module, critical);
+                module.Debug($"Resuming running activity: {Activity.GetName()}");
 
                 return;
             }

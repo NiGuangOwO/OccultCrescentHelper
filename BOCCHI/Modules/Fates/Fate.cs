@@ -10,67 +10,38 @@ namespace BOCCHI.Modules.Fates;
 
 public class Fate(IFate fate)
 {
+    // Eagerly snapshot values that never change for a FATE's lifetime.
+    // The native memory backing `fate` is guaranteed valid at construction time
+    // (the FATE was just observed in this frame), but is freed by the game as
+    // soon as the FATE despawns — reading it afterwards raises an
+    // AccessViolationException that cannot be reliably caught.
+    private readonly uint fateId = fate.FateId;
+    private readonly string name = fate.Name.GetText();
+    private readonly float radius = fate.Radius;
+    private readonly Vector3 position = fate.Position;
+
+    private bool valid = true;
+
     public readonly EventData Data = EventData.Fates[fate.FateId];
 
-    public uint Id
+    public bool IsValid => valid;
+
+    /// <summary>
+    /// Marks this FATE as despawned. After this is called every property returns
+    /// a safe default without touching the (already freed) native memory.
+    /// </summary>
+    public void Invalidate()
     {
-        get
-        {
-            try
-            {
-                return fate.FateId;
-            }
-            catch (AccessViolationException)
-            {
-                return 0;
-            }
-        }
+        valid = false;
     }
 
-    public string Name
-    {
-        get
-        {
-            try
-            {
-                return fate.Name.GetText();
-            }
-            catch (AccessViolationException)
-            {
-                return "Unknown Fate";
-            }
-        }
-    }
+    public uint Id => valid ? fateId : 0;
 
-    public float Radius
-    {
-        get
-        {
-            try
-            {
-                return Data.Radius ?? fate.Radius;
-            }
-            catch (AccessViolationException)
-            {
-                return 0f;
-            }
-        }
-    }
+    public string Name => valid ? name : "Unknown Fate";
 
-    public Vector3 StartPosition
-    {
-        get
-        {
-            try
-            {
-                return Data.StartPosition ?? fate.Position;
-            }
-            catch (AccessViolationException)
-            {
-                return Vector3.Zero;
-            }
-        }
-    }
+    public float Radius => valid ? Data.Radius ?? radius : 0f;
+
+    public Vector3 StartPosition => valid ? Data.StartPosition ?? position : Vector3.Zero;
 
     public readonly EventProgress Progress = new();
 
@@ -78,6 +49,11 @@ public class Fate(IFate fate)
     {
         get
         {
+            if (!valid)
+            {
+                return 100;
+            }
+
             try
             {
                 return fate.Progress;
@@ -91,7 +67,7 @@ public class Fate(IFate fate)
 
     public void Update(UpdateContext context)
     {
-        if (CurrentProgress <= 0)
+        if (!valid || CurrentProgress <= 0)
         {
             return;
         }

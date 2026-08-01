@@ -33,7 +33,12 @@ public class FateTracker
         var despawned = Fates.Keys.Except(currentFates.Keys).ToList();
         foreach (var id in despawned)
         {
-            OnFateDespawned?.Invoke(Fates[id]);
+            var fate = Fates[id];
+            // The game has already freed the native memory backing this FATE.
+            // Invalidate first so event handlers (e.g. Alerter reading fate.Name)
+            // never touch the dangling pointer.
+            fate.Invalidate();
+            OnFateDespawned?.Invoke(fate);
             Fates.Remove(id);
         }
 
