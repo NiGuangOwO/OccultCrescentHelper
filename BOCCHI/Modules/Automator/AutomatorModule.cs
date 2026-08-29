@@ -59,8 +59,8 @@ public class AutomatorModule : Module
             return;
         }
 
-        automator.Refresh();
         Config.Enabled = false;
+        StopAutomation();
         PluginConfig.Save();
     }
 
@@ -97,14 +97,29 @@ public class AutomatorModule : Module
     {
         var wasEnabled = Config.Enabled;
         Config.Enabled = false;
+        StopAutomation();
+
+        if (wasEnabled)
+        {
+            Svc.Chat.Print(T("messages.off"));
+        }
+    }
+
+    private void StopAutomation()
+    {
         automator.Refresh();
         Plugin.IPC.GetSubscriber<VNavmesh>().Stop();
         Plugin.Chain.Abort();
         ChainManager.AbortAll();
 
-        if (wasEnabled)
+        if (Config.ShouldToggleAiProvider)
         {
-            Svc.Chat.Print(T("messages.off"));
+            Config.AiProvider.Off();
+        }
+
+        if (Svc.PluginInterface.InstalledPlugins.Any(p => p.InternalName == "AEAssistV3" && p.IsLoaded))
+        {
+            Chat.ExecuteCommand("/aepull off");
         }
     }
 }
