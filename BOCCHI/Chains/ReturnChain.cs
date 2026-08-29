@@ -116,8 +116,24 @@ public class ReturnChain(TeleporterModule module, ReturnChainConfig config) : Ch
         chain.BreakIf(() => !buffs.ShouldRefreshBuffs() || !vnav.IsReady() || closestKnowledgeCrystal == null);
         chain.Then(_ => Actions.TryUnmount());
 
-        chain.Then(PathfindAndMoveToChain.RandomNearby(vnav, closestKnowledgeCrystal!.Position));
-        chain.WaitUntilNear(vnav, closestKnowledgeCrystal!.Position, 1);
+        // Pathfind straight to the crystal instead of a random nearby point.
+        // RandomNearby's FindPointOnFloor projection can place the pathfinding
+        // endpoint far away from the crystal, leaving the player out of range
+        // for Inquiring Mind.
+        chain.Then(new PathfindAndMoveToChain(vnav, closestKnowledgeCrystal!.Position));
+        // The crystal has a collision body, so pathfinding can never reach its
+        // exact position and would keep running forever. Stop as soon as we are
+        // within buff range instead.
+        chain.Then(new TaskManagerTask(() =>
+        {
+            if (Player.DistanceTo(closestKnowledgeCrystal!.Position) <= 3.5f || !vnav.IsRunning())
+            {
+                vnav.Stop();
+                return true;
+            }
+
+            return false;
+        }, new TaskManagerConfiguration { TimeLimitMS = 30000, AbortOnTimeout = false }));
         chain.Then(_ => vnav.Stop());
 
         chain.Then(new AllBuffsChain(buffs));
